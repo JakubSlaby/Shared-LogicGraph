@@ -18,8 +18,6 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		private List<AbstractLogicPort> m_OutputPorts;
 		private AbstractLogicPort[] m_OutputPortsCache;
 
-		private bool m_Initialized = false;
-
 		private LogicNodeState m_State = LogicNodeState.None;
 		public LogicNodeState State => m_State;
 		
@@ -30,11 +28,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			m_State = targetState;
 		}
 
-		public AbstractLogicNode()
-		{
-		}
-
-		#region Connection Ports
+#region Connection Ports
 		
 		protected internal void AddPort(AbstractLogicPort port)
 		{

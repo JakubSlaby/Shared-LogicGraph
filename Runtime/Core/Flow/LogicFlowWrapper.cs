@@ -24,12 +24,22 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			m_Flows.Remove(flow);
 		}
 
+		private List<AbstractLogicFlow> m_UpdateBuffer = new List<AbstractLogicFlow>();
 		public void Update(float deltaTime)
 		{
-			foreach (var flow in m_Flows)
+			m_UpdateBuffer.AddRange(m_Flows);
+			try
 			{
-				flow.Update(deltaTime);
+				foreach (var flow in m_UpdateBuffer)
+				{
+					flow.Update(deltaTime);
+				}
 			}
+			finally
+			{
+				m_UpdateBuffer.Clear();
+			}
+			
 		}
 	}
 }

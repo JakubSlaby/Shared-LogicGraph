@@ -2,10 +2,27 @@
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
+	
 	public sealed class LogicConnection : AbstractLogicConnection
 	{
 		
 	}
+	
+	public abstract class InvokedConnection : AbstractLogicConnection, IInvokedConnection, IActivateConnection
+	{
+		public abstract void Activate();
+
+		public abstract void Deactivate();
+
+		public void Invoke()
+		{
+			onConnectionInvoked?.Invoke(this);
+		}
+
+		public event Action<AbstractLogicConnection> onConnectionInvoked;
+		
+	}
+	
 	public abstract class AbstractLogicConnection
 	{
 		public AbstractLogicPort From { get; internal set; }
@@ -27,6 +44,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 	public interface IInvokedConnection
 	{
+		void Invoke();
 		event Action<AbstractLogicConnection> onConnectionInvoked;
 	}
 	

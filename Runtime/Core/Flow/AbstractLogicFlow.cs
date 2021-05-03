@@ -26,6 +26,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				return;
 			}
 			
+			if(node.State == LogicNodeState.Ended)
+				node.ChangeState(LogicNodeState.None);
+			
 			m_ActiveNodes.Add(node);
 			m_EvaluationBuffer.Add(node);
 			

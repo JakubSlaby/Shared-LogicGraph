@@ -10,6 +10,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		Paused,
 		Complete
 	}
+
+	public delegate void LogicGraphCallback(AbstractLogicGraph graph);
 	
 	public abstract class AbstractLogicGraph
 	{
@@ -21,6 +23,23 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		private LogicGraphState m_State = LogicGraphState.None;
 		public LogicGraphState state => m_State;
+
+		private LogicGraphCallback m_OnGraphStart;
+		private LogicGraphCallback m_OnGraphComplete;
+		public event LogicGraphCallback onGraphStart
+		{
+			add { m_OnGraphStart += value; }
+			remove { m_OnGraphStart -= value; }
+		}
+
+		public event LogicGraphCallback onGraphComplete
+		{
+			add { m_OnGraphComplete += value; }
+			remove { m_OnGraphComplete -= value; }
+		}
+
+		
+		
 		
 		#region Structure
 		
@@ -71,12 +90,14 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		public void Start()
 		{
-			if (m_State != LogicGraphState.Stopped)
+			if (m_State != LogicGraphState.Stopped && m_State != LogicGraphState.Complete)
 				return;
 			
 			DoStart();
 
 			m_State = LogicGraphState.Running;
+			
+			m_OnGraphStart?.Invoke(this);
 		}
 
 		protected abstract void DoStart();
@@ -106,8 +127,18 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		{
 			if (m_State != LogicGraphState.Paused)
 				return;
+
+			m_State = LogicGraphState.Running;
 		}
-		
+
+		protected void CompleteGraph()
+		{
+			m_State = LogicGraphState.Complete;
+			DoComplete();
+			m_OnGraphComplete?.Invoke(this);
+		}
+
+		protected abstract void DoComplete();
 
 #endregion
 

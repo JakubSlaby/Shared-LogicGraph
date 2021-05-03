@@ -22,7 +22,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 		private void OnFlowComplete(AbstractLogicFlow flow)
 		{
 			flow.onFlowComplete -= OnFlowComplete;
-			Stop();
+			CompleteGraph();
 		}
 
 		protected override void DoUpdate()
@@ -32,7 +32,12 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 
 		protected override void DoStop()
 		{
-			Debug.Log("State machine complete");
+			
+		}
+
+		protected override void DoComplete()
+		{
+			
 		}
 	}
 

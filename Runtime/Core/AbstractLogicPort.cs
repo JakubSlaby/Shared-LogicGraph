@@ -15,21 +15,6 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		Multiple = 1
 	}
 
-	public abstract class AbstractLogicPort<T> : AbstractLogicPort
-		where T : struct
-	{
-		public T Result { get; private set; }
-		
-		protected AbstractLogicPort(string id, string label, LogicPortDirection direction, LogicPortType type) : base(id, label, direction, type)
-		{
-		}
-
-		public void Invoke(T result)
-		{
-			Result = result;
-		}
-	}
-	
 	public abstract class AbstractLogicPort : ILogicPort
 	{
 		public string id { get; private set; }
@@ -70,13 +55,16 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			if(m_Connections == null)
 				m_Connections = new List<AbstractLogicConnection>();
 			
-			if(m_Connections.Contains(connection))
+			if(!m_Connections.Contains(connection))
 				m_Connections.Add(connection);
+
+			m_ConnectionsCache = null;
 		}
 
 		internal void RemoveConnection(AbstractLogicConnection connection)
 		{
 			m_Connections.Remove(connection);
+			m_ConnectionsCache = null;
 		}
 	}
 
@@ -91,7 +79,11 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		bool HasConnections { get; }
 		AbstractLogicConnection[] Connections { get; }
-		
+	}
+
+	public interface IInvokedPort : ILogicPort
+	{
+		event Action<AbstractLogicPort> onPortInvoked;
 	}
 
 }

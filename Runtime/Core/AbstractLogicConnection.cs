@@ -27,7 +27,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 	public interface IInvokedConnection
 	{
-		event Action<IInvokedConnection> onConnectionInvoked;
+		event Action<AbstractLogicConnection> onConnectionInvoked;
 	}
 	
 }

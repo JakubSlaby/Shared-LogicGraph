@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	{
 		private List<AbstractLogicNode> m_ActiveNodes;
 		private Dictionary<AbstractLogicNode, Task> m_ActiveAsyncTasks;
+
+		public event Action<AbstractLogicFlow> onFlowComplete;
 		
 		public AbstractLogicFlow()
 		{
@@ -53,6 +56,29 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			
 		}
 
+		protected void TransitionNodes(AbstractLogicConnection connection)
+		{
+			var fromPort = connection.From;
+			var fromNode = fromPort.Node;
+
+			if (!m_ActiveNodes.Contains(fromNode))
+			{
+				Debug.LogError($"Trying to transition from a not active node {fromNode}, connection {connection}. Stopping");
+				return;
+			}
+			var toPort = connection.To;
+			var toNode = toPort.Node;
+
+			if (m_ActiveNodes.Contains(toNode))
+			{
+				Debug.LogError($"Trying to transition To an active node {toNode}, from node {fromNode}, connection {connection}. Stopping.");
+				return;
+			}
+			
+			RemoveActiveNode(fromNode);
+			SetActiveNode(toNode);
+		}
+
 		protected bool IsTrackedAsynchronously(AbstractLogicNode node)
 		{
 			return m_ActiveAsyncTasks.ContainsKey(node);
@@ -79,13 +105,22 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 			if (m_ActiveNodes.Count == 0)
 			{
-				
+				CompleteFlow();
 			}
 		}
 
-		protected virtual void EvaluateNode(AbstractLogicNode node, float deltaTime)
+		protected abstract void EvaluateNode(AbstractLogicNode node, float deltaTime);
+
+		protected void CompleteFlow()
 		{
+			while (m_ActiveNodes.Count > 0)
+			{
+				RemoveActiveNode(m_ActiveNodes[0]);
+			}
 			
+			onFlowComplete?.Invoke(this);
 		}
+
+
 	}
 }

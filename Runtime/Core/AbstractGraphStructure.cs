@@ -5,7 +5,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 {
 	public interface IGraphStructure
 	{
-		void AddNode(AbstractLogicNode node);
+		AbstractLogicNode AddNode(AbstractLogicNode node);
 		void RemoveNode(AbstractLogicNode node);
 		
 		AbstractLogicConnection Connect(AbstractLogicNode from, AbstractLogicNode to, AbstractLogicConnection connection);
@@ -24,10 +24,10 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		protected List<AbstractLogicConnection> m_Connections = new List<AbstractLogicConnection>();
 		protected AbstractLogicConnection[] m_ConnectionsCache;
 		
-		public void AddNode(AbstractLogicNode node)
+		public AbstractLogicNode AddNode(AbstractLogicNode node)
 		{
 			if (m_Nodes.Contains(node))
-				return;
+				return null;
 
 			if (!node.HasPorts(LogicPortDirection.Input))
 			{
@@ -42,6 +42,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			node.Structure = this;
 			m_Nodes.Add(node);
 			m_NodesCache = null;
+			
+			return node;
 		}
 
 		public void RemoveNode(AbstractLogicNode node)

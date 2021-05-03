@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
@@ -108,9 +107,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			switch (direction)
 			{
 				case LogicPortDirection.Input:
-					return m_InputPorts.Count > 0;
+					return m_InputPorts?.Count > 0;
 				case LogicPortDirection.Output:
-					return m_OutputPorts.Count > 0;
+					return m_OutputPorts?.Count > 0;
 				default:
 					return false;
 			}
@@ -140,11 +139,6 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	public interface IExecuteNode
 	{
 		void Execute();
-	}
-
-	public interface IExecuteAsyncNode
-	{
-		Task Execute();
 	}
 
 	public interface IActivationNode

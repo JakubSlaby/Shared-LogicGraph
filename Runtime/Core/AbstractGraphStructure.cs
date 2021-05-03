@@ -8,6 +8,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		AbstractLogicNode AddNode(AbstractLogicNode node);
 		void RemoveNode(AbstractLogicNode node);
 		
+		T AddNode<T>(T node) where T : AbstractLogicNode;
+		
 		AbstractLogicConnection Connect(AbstractLogicNode from, AbstractLogicNode to, AbstractLogicConnection connection);
 		AbstractLogicConnection Connect(AbstractLogicPort from, AbstractLogicPort to, AbstractLogicConnection connection);
 		
@@ -23,27 +25,11 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		protected AbstractLogicNode[] m_NodesCache;
 		protected List<AbstractLogicConnection> m_Connections = new List<AbstractLogicConnection>();
 		protected AbstractLogicConnection[] m_ConnectionsCache;
-		
-		public AbstractLogicNode AddNode(AbstractLogicNode node)
+
+
+		AbstractLogicNode IGraphStructure.AddNode(AbstractLogicNode node)
 		{
-			if (m_Nodes.Contains(node))
-				return null;
-
-			if (!node.HasPorts(LogicPortDirection.Input))
-			{
-				node.AddPort(new InputPort());
-			}
-
-			if (!node.HasPorts(LogicPortDirection.Output))
-			{
-				node.AddPort(new OutputPort());
-			}
-			
-			node.Structure = this;
-			m_Nodes.Add(node);
-			m_NodesCache = null;
-			
-			return node;
+			return AddNode<AbstractLogicNode>(node);
 		}
 
 		public void RemoveNode(AbstractLogicNode node)
@@ -53,6 +39,28 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				node.Structure = null;
 				m_NodesCache = null;
 			}
+		}
+
+		public T AddNode<T>(T node) where T : AbstractLogicNode
+		{
+			if (m_Nodes.Contains(node))
+				return null;
+
+			if (!node.HasPorts(LogicPortDirection.Input))
+			{
+				node.AddPort(new DefaultLogicPort("input", "Input", LogicPortDirection.Input, LogicPortType.Multiple));
+			}
+
+			if (!node.HasPorts(LogicPortDirection.Output))
+			{
+				node.AddPort(new DefaultLogicPort("output", "Output", LogicPortDirection.Output, LogicPortType.Multiple));
+			}
+			
+			node.Structure = this;
+			m_Nodes.Add(node);
+			m_NodesCache = null;
+			
+			return node;
 		}
 
 		protected virtual AbstractLogicConnection CreateDefaultConnectionInstance()

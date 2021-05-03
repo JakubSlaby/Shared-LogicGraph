@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using WhiteSparrow.Shared.LogicGraph.Core;
 
 namespace WhiteSparrow.Shared.LogicGraph.StateGraph
@@ -25,6 +26,9 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			m_ActiveOutputPorts.AddRange(outputPorts);
 			foreach (var port in outputPorts)
 			{
+				if (port is IInvokedPort invokedPort)
+					invokedPort.onPortInvoked += OnOutputPortInvoked;
+				
 				var connections = port.Connections;
 				foreach (var connection in connections)
 				{
@@ -55,7 +59,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			foreach (var port in m_ActiveOutputPorts)
 			{
 				if (port is IInvokedPort invokedPort)
-					invokedPort.onPortInvoked += OnOutputPortInvoked;
+					invokedPort.onPortInvoked -= OnOutputPortInvoked;
 			}
 			m_ActiveOutputPorts.Clear();
 		}
@@ -79,6 +83,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			ActivePortsStopListening();
 			ActiveConnectionsStopListening();
 			
+			connection.From.Node.ChangeState(LogicNodeState.Ended);
 			m_InvokedConnection = connection;
 		}
 
@@ -95,8 +100,12 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 				break;
 			}
 
+			port.Node.ChangeState(LogicNodeState.Ended);
 			if (defaultConnection == null)
+			{
+				Debug.LogError("Invoked port did not have a non conditional connection that could be transitioned. State will be Ended but not exited.");
 				return;
+			}
 			
 			m_InvokedConnection = defaultConnection;
 			
@@ -142,7 +151,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 
 			if (connection == null)
 			{
-				if (m_ActiveOutputConnections.Count > 0)
+				if (m_ActiveOutputConnections.Count == 0)
 					CompleteFlow();
 				return;
 			}

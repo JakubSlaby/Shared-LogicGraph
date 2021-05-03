@@ -36,7 +36,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		#region Connection Ports
 		
-		protected internal virtual void AddPort(AbstractLogicPort port)
+		protected internal void AddPort(AbstractLogicPort port)
 		{
 			if (CheckPortDuplicate(port))
 			{
@@ -62,7 +62,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			}
 		}
 
-		protected internal virtual void RemovePort(AbstractLogicPort port)
+		protected internal void RemovePort(AbstractLogicPort port)
 		{
 			if (port.Node != this)
 				return;

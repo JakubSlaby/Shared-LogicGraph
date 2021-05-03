@@ -14,7 +14,15 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 
 		protected override void DoStart()
 		{
-			flowWrapper.AddFlow(new StateGraphFlow(m_fsmStructure.StartNode));
+			var flow = new StateGraphFlow(m_fsmStructure.StartNode);
+			flow.onFlowComplete += OnFlowComplete;
+			flowWrapper.AddFlow(flow);
+		}
+
+		private void OnFlowComplete(AbstractLogicFlow flow)
+		{
+			flow.onFlowComplete -= OnFlowComplete;
+			Stop();
 		}
 
 		protected override void DoUpdate()
@@ -24,7 +32,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 
 		protected override void DoStop()
 		{
-			
+			Debug.Log("State machine complete");
 		}
 	}
 

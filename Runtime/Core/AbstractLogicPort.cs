@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
@@ -15,6 +16,13 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		Multiple = 1
 	}
 
+	internal class DefaultLogicPort : AbstractLogicPort
+	{
+		public DefaultLogicPort(string id, string label, LogicPortDirection direction, LogicPortType type) : base(id, label, direction, type)
+		{
+		}
+	}
+	
 	public abstract class AbstractLogicPort : ILogicPort
 	{
 		public string id { get; private set; }
@@ -83,6 +91,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 	public interface IInvokedPort : ILogicPort
 	{
+		void Invoke();
 		event Action<AbstractLogicPort> onPortInvoked;
 	}
 

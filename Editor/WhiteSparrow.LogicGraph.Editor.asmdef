@@ -1,0 +1,17 @@
+{
+    "name": "WhiteSparrow.LogicGraph.Editor",
+    "references": [
+        "WhiteSparrow.LogicGraph"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "AutomaticGraphLayout.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

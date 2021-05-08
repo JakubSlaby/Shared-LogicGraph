@@ -43,6 +43,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		#region Structure
 		
+		
+		
 		private void ConstructGraph()
 		{
 			m_FlowWrapper = new LogicFlowWrapper();
@@ -60,6 +62,10 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		public void Initialize()
 		{
+			#if UNITY_EDITOR
+			LogicGraphRegistry.RegisterGraph(this);
+			#endif
+			
 			ConstructGraph();
 			InitializeNodes();
 			InitializeConnections();

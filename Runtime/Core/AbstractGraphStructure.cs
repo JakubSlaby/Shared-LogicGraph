@@ -19,7 +19,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	}
 
 	
-	public abstract class AbstractGraphStructure : IGraphStructure
+	public abstract partial class AbstractGraphStructure : IGraphStructure
 	{
 		protected List<AbstractLogicNode> m_Nodes = new List<AbstractLogicNode>();
 		protected AbstractLogicNode[] m_NodesCache;

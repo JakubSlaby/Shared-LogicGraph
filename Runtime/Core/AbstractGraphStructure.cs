@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
-	public interface IGraphStructure
+	public partial interface IGraphStructure
 	{
 		AbstractLogicNode AddNode(AbstractLogicNode node);
 		void RemoveNode(AbstractLogicNode node);

@@ -53,33 +53,12 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 					
 					Selection.activeObject = this;
 					
-					string dot = ((AbstractGraphStructure) graph.structure).ExportDot();
+					string dot = graph.structure.ExportDot();
 					EditorGUIUtility.systemCopyBuffer = dot;
 
-					var nodes = graph.structure.GetAllNodes();
 
-					GeometryGraph gg = new GeometryGraph();
+					GeometryGraph gg = graph.structure.ToMSAL();
 					
-
-					Dictionary<AbstractLogicNode, Node> nodeMap = new Dictionary<AbstractLogicNode, Node>();
-					foreach (var logicNode in nodes)
-					{
-						var node = new Node(CurveFactory.CreateRectangle(Random.Range(100,200), Random.Range(60,120), new Point(0, 0)), logicNode);
-						nodeMap.Add(logicNode, node);
-						gg.Nodes.Add(node);
-						Debug.Log(logicNode.GetType().Name);
-					}
-
-					var connections = graph.structure.GetAllConnections();
-					foreach (var logicConnection in connections)
-					{
-						nodeMap.TryGetValue(logicConnection.From.Node, out var from);
-						nodeMap.TryGetValue(logicConnection.To.Node, out var to);
-
-						var edge = new Edge(from, to);
-						gg.Edges.Add(edge);
-					}
-
 					// RankingLayout rl = new RankingLayout(rlsettings, gg);
 					// rl.Run();
 					LayoutAlgorithmSettings settings = null;
@@ -106,11 +85,6 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 					}
 					
 					LayoutHelpers.CalculateLayout(gg, settings, null);
-					
-					// var settings = FastIncrementalLayoutSettings.CreateFastIncrementalLayoutSettings();
-					// settings.RepulsiveForceConstant = RepulsiveForceConstant;
-					// InitialLayout il = new InitialLayout(gg, settings);
-					// il.Run();
 
 					gg.UpdateBoundingBox();
 

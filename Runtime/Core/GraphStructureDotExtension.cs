@@ -1,9 +1,13 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
-	public abstract partial class AbstractGraphStructure : IGraphStructure
+	public partial interface IGraphStructure
+	{
+		string ExportDot();
+	}
+	
+	public abstract partial class AbstractGraphStructure 
 	{
 		public string ExportDot()
 		{

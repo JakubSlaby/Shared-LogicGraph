@@ -1,9 +1,14 @@
 {
     "name": "WhiteSparrow.LogicGraph.Editor",
+    "rootNamespace": "",
     "references": [
-        "WhiteSparrow.LogicGraph"
+        "WhiteSparrow.LogicGraph",
+        "WhiteSparrow.Shared.GraphEditor",
+        "WhiteSparrow.Shared.GraphEditor.Runtime"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,

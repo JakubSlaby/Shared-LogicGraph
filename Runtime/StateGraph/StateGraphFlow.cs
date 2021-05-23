@@ -27,7 +27,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			foreach (var port in outputPorts)
 			{
 				if (port is IInvokedPort invokedPort)
-					invokedPort.onPortInvoked += OnOutputPortInvoked;
+					invokedPort.OnPortInvoked += OnOutputPortInvoked;
 				
 				var connections = port.Connections;
 				foreach (var connection in connections)
@@ -59,7 +59,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			foreach (var port in m_ActiveOutputPorts)
 			{
 				if (port is IInvokedPort invokedPort)
-					invokedPort.onPortInvoked -= OnOutputPortInvoked;
+					invokedPort.OnPortInvoked -= OnOutputPortInvoked;
 			}
 			m_ActiveOutputPorts.Clear();
 		}

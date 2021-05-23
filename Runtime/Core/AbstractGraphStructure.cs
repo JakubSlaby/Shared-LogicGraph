@@ -13,12 +13,11 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		AbstractLogicConnection Connect(AbstractLogicNode from, AbstractLogicNode to, AbstractLogicConnection connection);
 		AbstractLogicConnection Connect(AbstractLogicPort from, AbstractLogicPort to, AbstractLogicConnection connection);
 		
-		
 		AbstractLogicNode[] GetAllNodes();
 		AbstractLogicConnection[] GetAllConnections();
 	}
 
-	
+	[Serializable]
 	public abstract partial class AbstractGraphStructure : IGraphStructure
 	{
 		protected List<AbstractLogicNode> m_Nodes = new List<AbstractLogicNode>();
@@ -92,10 +91,10 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		public AbstractLogicConnection Connect(AbstractLogicPort from, AbstractLogicPort to, AbstractLogicConnection connection)
 		{
 			if(from == to) throw new Exception("Cannot Connect Ports. Same port.");
-			if(from.direction == to.direction) throw new Exception("Cannot Connect Ports. Same direction.");
+			if(from.Direction == to.Direction) throw new Exception("Cannot Connect Ports. Same direction.");
 			if(from.Node == to.Node) throw new Exception("Cannot Connect Ports. Same parent node.");
 			// we provided the ports the other way around
-			if (from.direction == LogicPortDirection.Input && to.direction == LogicPortDirection.Output)
+			if (from.Direction == LogicPortDirection.Input && to.Direction == LogicPortDirection.Output)
 			{
 				var t = from;
 				from = to;

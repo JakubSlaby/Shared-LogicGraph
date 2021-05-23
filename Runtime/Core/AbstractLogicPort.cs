@@ -16,6 +16,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		Multiple = 1
 	}
 
+	
+
 	internal class DefaultLogicPort : AbstractLogicPort
 	{
 		public DefaultLogicPort(string id, string label, LogicPortDirection direction, LogicPortType type) : base(id, label, direction, type)
@@ -23,22 +25,22 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		}
 	}
 	
-	public abstract class AbstractLogicPort : ILogicPort
+	public abstract partial class AbstractLogicPort : ILogicPort
 	{
-		public string id { get; private set; }
-		public string label { get; private set; }
-		public LogicPortDirection direction { get; private set; }
-		public LogicPortType type { get; private set; }
+		public string Id { get; private set; }
+		public string Label { get; private set; }
+		public LogicPortDirection Direction { get; private set; }
+		public LogicPortType Type { get; private set; }
 		
 		public AbstractLogicNode Node { get; internal set; }
 		internal IGraphStructure Structure => Node?.Structure ?? null;
 		
 		public AbstractLogicPort(string id, string label, LogicPortDirection direction, LogicPortType type)
 		{
-			this.id = id;
-			this.label = label;
-			this.direction = direction;
-			this.type = type;
+			this.Id = id;
+			this.Label = label;
+			this.Direction = direction;
+			this.Type = type;
 		}
 
 		private List<AbstractLogicConnection> m_Connections;
@@ -78,10 +80,10 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 	public interface ILogicPort
 	{
-		string id { get; }
-		string label { get; }
-		LogicPortDirection direction { get;  }
-		LogicPortType type { get; }
+		string Id { get; }
+		string Label { get; }
+		LogicPortDirection Direction { get;  }
+		LogicPortType Type { get; }
 		
 		AbstractLogicNode Node { get; }
 		
@@ -92,7 +94,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	public interface IInvokedPort : ILogicPort
 	{
 		void Invoke();
-		event Action<AbstractLogicPort> onPortInvoked;
+		event Action<AbstractLogicPort> OnPortInvoked;
 	}
 
 }

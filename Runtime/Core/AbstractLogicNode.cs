@@ -10,9 +10,17 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		Active,
 		Ended
 	}
-	
-	public abstract class AbstractLogicNode
+
+	public interface ILogicNode
 	{
+		
+	}
+	
+	public abstract partial class AbstractLogicNode : ILogicNode
+	{
+		private Guid m_Guid;
+		public Guid guid => m_Guid;
+		
 		private List<AbstractLogicPort> m_InputPorts;
 		private AbstractLogicPort[] m_InputPortsCache;
 		private List<AbstractLogicPort> m_OutputPorts;
@@ -23,6 +31,16 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		internal IGraphStructure Structure { get; set; }
 
+		public AbstractLogicNode()
+		{
+			m_Guid = Guid.NewGuid();
+		}
+
+		internal void SetGuid(Guid guid)
+		{
+			m_Guid = guid;
+		}
+		
 		internal void ChangeState(LogicNodeState targetState)
 		{
 			m_State = targetState;
@@ -34,20 +52,20 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		{
 			if (CheckPortDuplicate(port))
 			{
-				Debug.LogError($"Port with that Id={port.id} has already been assigned in node type={this.GetType().Name}");
+				Debug.LogError($"Port with that Id={port.Id} has already been assigned in node type={this.GetType().Name}");
 				return;
 			}
 
 			port.Node = this;
 			
-			if (port.direction == LogicPortDirection.Input)
+			if (port.Direction == LogicPortDirection.Input)
 			{
 				if(m_InputPorts == null)
 					m_InputPorts = new List<AbstractLogicPort>();
 				m_InputPorts.Add(port);
 				m_InputPortsCache = null;
 			}
-			else if (port.direction == LogicPortDirection.Output)
+			else if (port.Direction == LogicPortDirection.Output)
 			{
 				if(m_OutputPorts == null)
 					m_OutputPorts = new List<AbstractLogicPort>();
@@ -70,13 +88,13 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		private bool CheckPortDuplicate(AbstractLogicPort port)
 		{
-			var list = port.direction == LogicPortDirection.Input ? m_InputPorts : m_OutputPorts;
+			var list = port.Direction == LogicPortDirection.Input ? m_InputPorts : m_OutputPorts;
 			if (list == null)
 				return false;
 			
 			foreach (var existingPort in list)
 			{
-				if (existingPort.id == port.id)
+				if (existingPort.Id == port.Id)
 					return true;
 			}
 

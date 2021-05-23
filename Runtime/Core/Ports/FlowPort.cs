@@ -10,9 +10,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		public void Invoke()
 		{
-			onPortInvoked?.Invoke(this);
+			OnPortInvoked?.Invoke(this);
 		}
 		
-		public event Action<AbstractLogicPort> onPortInvoked;
+		public event Action<AbstractLogicPort> OnPortInvoked;
 	}
 }

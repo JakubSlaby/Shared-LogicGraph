@@ -23,7 +23,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 	}
 	
-	public abstract class AbstractLogicConnection
+	public abstract partial class AbstractLogicConnection
 	{
 		public AbstractLogicPort From { get; internal set; }
 		public AbstractLogicPort To { get; internal set; }

@@ -13,7 +13,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 	public delegate void LogicGraphCallback(AbstractLogicGraph graph);
 	
-	public abstract class AbstractLogicGraph
+	public abstract partial class AbstractLogicGraph
 	{
 		private IGraphStructure m_GraphStructure;
 		public IGraphStructure structure => m_GraphStructure;
@@ -38,9 +38,6 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			remove { m_OnGraphComplete -= value; }
 		}
 
-		
-		
-		
 		#region Structure
 		
 		
@@ -58,7 +55,6 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		protected abstract void DoConstructGraph();
 
 		#endregion
-
 		
 		public void Initialize()
 		{

@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="LogicGraphWindow.uss" />
+    <ui:VisualElement name="PrimaryContainer" style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="SidebarContainer" class="sidebar" style="min-width: 150px; max-width: 30%; background-color: rgb(0, 132, 6);">
+            <ui:IMGUIContainer name="TypeListContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="ContentContainer" style="flex-grow: 2; flex-wrap: wrap;" />
+    </ui:VisualElement>
+</ui:UXML>

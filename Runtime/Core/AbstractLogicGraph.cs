@@ -55,14 +55,19 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		protected abstract void DoConstructGraph();
 
 		#endregion
+
+		internal void Construct()
+		{
+			ConstructGraph();
+		}
 		
 		public void Initialize()
 		{
 			#if UNITY_EDITOR
-			LogicGraphRegistry.RegisterGraph(this);
+			LogicGraphRuntimeRegistry.RegisterGraph(this);
 			#endif
 			
-			ConstructGraph();
+			Construct();
 			InitializeNodes();
 			InitializeConnections();
 

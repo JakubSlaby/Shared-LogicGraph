@@ -4,8 +4,9 @@ using Microsoft.Msagl.Core.Layout;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using WhiteSparrow.Shared.LogicGraph.Core;
 
-namespace WhiteSparrow.Shared.LogicGraph.Core
+namespace WhiteSparrow.Shared.LogicGraphEditor
 {
 	public class QuickTestLogicGraphWindow : EditorWindow
 	{
@@ -89,7 +90,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		private void OnEnable()
 		{
-			var graphs = LogicGraphRegistry.GetLogicGraphs();
+			var graphs = LogicGraphRuntimeRegistry.GetLogicGraphs();
 			foreach (var weakReference in graphs)
 			{
 				if (!weakReference.TryGetTarget(out var graph))

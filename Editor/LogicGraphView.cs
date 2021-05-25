@@ -1,6 +1,6 @@
 ﻿using WhiteSparrow.Shared.GraphEditor.View;
 
-namespace WhiteSparrow.Shared.LogicGraph.Core
+namespace WhiteSparrow.Shared.LogicGraphEditor
 {
 	public class LogicGraphView : AbstractGraphView
 	{

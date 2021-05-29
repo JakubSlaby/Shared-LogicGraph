@@ -45,8 +45,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		private List<AbstractLogicConnection> m_Connections;
 		private AbstractLogicConnection[] m_ConnectionsCache;
-
-		public bool HasConnections => m_Connections?.Count > 0;
+		private bool m_HasDefaultConnections;
+		
 		public AbstractLogicConnection[] Connections
 		{
 			get
@@ -56,6 +56,12 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				return m_ConnectionsCache;
 			}
 		}
+
+		/// <summary>
+		/// Check if the port has any NON conditional ("default") connections that allow to pass freely forward.
+		/// </summary>
+		public bool HasDefaultConnections => m_HasDefaultConnections;
+		public bool HasConnections => m_Connections?.Count > 0;
 
 		internal void AddConnection(AbstractLogicConnection connection)
 		{
@@ -69,12 +75,22 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				m_Connections.Add(connection);
 
 			m_ConnectionsCache = null;
+			m_HasDefaultConnections |= connection is IInvokedConnection == false;
 		}
 
 		internal void RemoveConnection(AbstractLogicConnection connection)
 		{
 			m_Connections.Remove(connection);
 			m_ConnectionsCache = null;
+
+			if (connection is IInvokedConnection == false)
+			{
+				m_HasDefaultConnections = false;
+				foreach (var candidate in m_Connections)
+				{
+					m_HasDefaultConnections |= candidate is IInvokedConnection == false;
+				}
+			}
 		}
 	}
 

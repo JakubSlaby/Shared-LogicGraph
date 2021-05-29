@@ -2,7 +2,7 @@
 
 namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 {
-	public class AnyState : AbstractState
+	public class AnyState : AbstractTriggerNode
 	{
 		public readonly OutputPort OutputPort;
 
@@ -11,9 +11,5 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			AddPort(OutputPort = new OutputPort("Out", null, LogicPortType.Multiple));
 		}
 		
-		public override void Execute()
-		{
-			
-		}
 	}
 }

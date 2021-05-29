@@ -14,6 +14,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		AbstractLogicConnection Connect(AbstractLogicPort from, AbstractLogicPort to, AbstractLogicConnection connection);
 		
 		AbstractLogicNode[] GetAllNodes();
+		AbstractTriggerNode[] GetAllTriggerNodes();
 		AbstractLogicConnection[] GetAllConnections();
 	}
 
@@ -22,6 +23,10 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	{
 		protected List<AbstractLogicNode> m_Nodes = new List<AbstractLogicNode>();
 		protected AbstractLogicNode[] m_NodesCache;
+
+		protected List<AbstractTriggerNode> m_TriggerNodes = new List<AbstractTriggerNode>();
+		protected AbstractTriggerNode[] m_TriggerNodesCache;
+
 		protected List<AbstractLogicConnection> m_Connections = new List<AbstractLogicConnection>();
 		protected AbstractLogicConnection[] m_ConnectionsCache;
 
@@ -35,6 +40,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		{
 			if (m_Nodes.Remove(node))
 			{
+				if (node is AbstractTriggerNode triggerNode && m_TriggerNodes.Remove(triggerNode))
+					m_TriggerNodesCache = null;
+				
 				node.Structure = null;
 				m_NodesCache = null;
 			}
@@ -58,6 +66,12 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			node.Structure = this;
 			m_Nodes.Add(node);
 			m_NodesCache = null;
+
+			if (node is AbstractTriggerNode triggerNode)
+			{
+				m_TriggerNodes.Add(triggerNode);
+				m_TriggerNodesCache = null;
+			}
 			
 			return node;
 		}
@@ -141,6 +155,13 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			if (m_NodesCache == null)
 				m_NodesCache = m_Nodes.ToArray();
 			return m_NodesCache;
+		}
+
+		AbstractTriggerNode[] IGraphStructure.GetAllTriggerNodes()
+		{
+			if (m_TriggerNodesCache == null)
+				m_TriggerNodesCache = m_TriggerNodes.ToArray();
+			return m_TriggerNodesCache;
 		}
 
 		AbstractLogicConnection[] IGraphStructure.GetAllConnections()

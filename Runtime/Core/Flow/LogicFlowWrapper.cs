@@ -5,7 +5,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	public class LogicFlowWrapper
 	{
 		private List<AbstractLogicFlow> m_Flows;
-
+		public IReadOnlyList<AbstractLogicFlow> Flows => m_Flows;
+		
+		
 		public LogicFlowWrapper()
 		{
 			m_Flows = new List<AbstractLogicFlow>();
@@ -16,12 +18,16 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			if (m_Flows.Contains(flow))
 				return;
 			
+			flow.Activate(this);
 			m_Flows.Add(flow);
+			
 		}
 
 		public void RemoveFlow(AbstractLogicFlow flow)
 		{
 			m_Flows.Remove(flow);
+			
+			flow.Deactivate();
 		}
 
 		private List<AbstractLogicFlow> m_UpdateBuffer = new List<AbstractLogicFlow>();
@@ -39,7 +45,6 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			{
 				m_UpdateBuffer.Clear();
 			}
-			
 		}
 	}
 }

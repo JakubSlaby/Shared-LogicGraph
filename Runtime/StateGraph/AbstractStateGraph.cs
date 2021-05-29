@@ -6,6 +6,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 	public abstract class AbstractStateGraph : AbstractLogicGraph
 	{
 		private StateGraphStructure m_fsmStructure;
+		protected AnyState AnyState => m_fsmStructure.AnyNode;
 		
 		protected override IGraphStructure GetStructureInstance()
 		{
@@ -17,6 +18,12 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			var flow = new StateGraphFlow(m_fsmStructure.StartNode);
 			flow.onFlowComplete += OnFlowComplete;
 			flowWrapper.AddFlow(flow);
+
+			if (m_fsmStructure.AnyNode != null && m_fsmStructure.AnyNode.OutputPort.HasConnections)
+			{
+				var anyFlow = new AnyStateFlow(m_fsmStructure.AnyNode);
+				flowWrapper.AddFlow(anyFlow);
+			}
 		}
 
 		private void OnFlowComplete(AbstractLogicFlow flow)

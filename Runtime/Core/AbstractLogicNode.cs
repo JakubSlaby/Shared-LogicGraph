@@ -15,7 +15,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	{
 		
 	}
-	
+
 	public abstract partial class AbstractLogicNode : ILogicNode
 	{
 		private Guid m_Guid;
@@ -139,7 +139,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				m_OutputPortsCache = m_OutputPorts?.ToArray() ?? Array.Empty<AbstractLogicPort>();
 			return m_OutputPortsCache;
 		}
-
+		
 		#endregion
 	}
 

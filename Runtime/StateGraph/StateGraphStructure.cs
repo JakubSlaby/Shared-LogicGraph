@@ -18,6 +18,18 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 				m_StartNode = value;
 			}
 		}
+
+		private AnyState m_AnyState;
+		public AnyState AnyNode
+		{
+			get
+			{
+				if (m_AnyState == null)
+					AddNode(m_AnyState = new AnyState());
+
+				return m_AnyState;
+			}
+		}
 		
 		protected override AbstractLogicConnection CreateDefaultConnectionInstance()
 		{

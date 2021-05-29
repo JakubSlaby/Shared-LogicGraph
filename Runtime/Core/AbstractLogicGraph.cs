@@ -18,6 +18,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		private IGraphStructure m_GraphStructure;
 		public IGraphStructure structure => m_GraphStructure;
 
+		
+		
 		private LogicFlowWrapper m_FlowWrapper;
 		protected LogicFlowWrapper flowWrapper => m_FlowWrapper;
 

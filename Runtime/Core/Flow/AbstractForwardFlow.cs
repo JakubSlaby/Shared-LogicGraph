@@ -4,9 +4,11 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 {
 	public abstract class AbstractForwardFlow : AbstractLogicFlow
 	{
-		private HashSet<AbstractLogicPort> m_InvokedPorts = new HashSet<AbstractLogicPort>();
-		private HashSet<AbstractLogicConnection> m_InvokedConnections = new HashSet<AbstractLogicConnection>();
-
+		// Nodes that were invoked for transition
+		private HashSet<AbstractLogicNode> m_InvokedNodes = new HashSet<AbstractLogicNode>();
+		private Dictionary<AbstractLogicNode, AbstractLogicPort> m_InvokedPorts = new Dictionary<AbstractLogicNode, AbstractLogicPort>();
+		private Dictionary<AbstractLogicNode, AbstractLogicConnection> m_InvokedConnections = new Dictionary<AbstractLogicNode, AbstractLogicConnection>();
+		
 		protected override void OnActiveNodeSet(AbstractLogicNode node)
 		{
 			var outputPorts = node.GetOutputPorts();
@@ -31,13 +33,16 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		protected override void OnActiveNodeRemoved(AbstractLogicNode node)
 		{
+			m_InvokedNodes.Remove(node);
+			m_InvokedPorts.Remove(node);
+			m_InvokedConnections.Remove(node);
+			
 			var outputPorts = node.GetOutputPorts();
 			foreach (var outputPort in outputPorts)
 			{
 				if (outputPort is IInvokedPort invokedPort)
 					invokedPort.OnPortInvoked -= OnOutputPortInvoked;
 				
-				m_InvokedPorts.Remove(outputPort);
 				
 				var connections = outputPort.Connections;
 				foreach (var connection in connections)
@@ -49,81 +54,22 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		}
 		private void OnOutputConnectionInvoked(AbstractLogicConnection connection)
 		{
-			if (m_InvokedConnections.Contains(connection) || m_InvokedPorts.Contains(connection.From))
+			if (m_InvokedNodes.Contains(connection.From.Node))
 				return;
 			
-			m_InvokedConnections.Add(connection);
-			m_InvokedPorts.Add(connection.From);
+			m_InvokedConnections.Add(connection.From.Node, connection);
+			m_InvokedNodes.Add(connection.From.Node);
 		}
 
 		private void OnOutputPortInvoked(AbstractLogicPort port)
 		{
-			if (m_InvokedPorts.Contains(port))
+			if (m_InvokedNodes.Contains(port.Node))
 				return;
 			
-			m_InvokedPorts.Add(port);
+			m_InvokedPorts.Add(port.Node, port);
+			m_InvokedNodes.Add(port.Node);
 		}
 
-		private List<AbstractLogicNode> m_HelperEvaluatedTransitionCandidates = new List<AbstractLogicNode>();
-		private List<AbstractLogicConnection> m_HelperEvaluatedConnections = new List<AbstractLogicConnection>();
-		protected override void Evaluate(List<AbstractLogicNode> buffer, float deltaTime)
-		{
-			// evaluate nodes that are activated
-			base.Evaluate(buffer, deltaTime);
-			
-			if(m_InvokedConnections.Count == 0 && m_InvokedPorts.Count == 0)
-				return;
-			
-			// if we have queued invoked ports / connections, process those
-			foreach (var connection in m_InvokedConnections)
-			{
-				if (m_HelperEvaluatedTransitionCandidates.Contains(connection.From.Node))
-					continue;
-
-				m_HelperEvaluatedTransitionCandidates.Add(connection.From.Node);
-				m_HelperEvaluatedConnections.Add(connection);
-				m_InvokedPorts.Remove(connection.From);
-			}
-			m_InvokedConnections.Clear();
-
-			foreach (var port in m_InvokedPorts)
-			{
-				if(m_HelperEvaluatedTransitionCandidates.Contains(port.Node))
-					continue;
-				
-				if(!port.HasDefaultConnections)
-					continue;
-
-				var connections = port.Connections;
-				foreach (var connection in connections)
-				{
-					if (connection is IInvokedConnection)
-						continue;
-
-					m_HelperEvaluatedConnections.Add(connection);
-					break;
-				}
-			}
-			m_InvokedPorts.Clear();
-			m_HelperEvaluatedTransitionCandidates.Clear();
-
-			if (m_HelperEvaluatedConnections.Count > 0)
-			{
-				EvaluateConnections(m_HelperEvaluatedConnections);
-				m_HelperEvaluatedConnections.Clear();
-			}
-			
-		}
-
-		
-		protected virtual void EvaluateConnections(List<AbstractLogicConnection> buffer)
-		{
-			foreach (var connection in buffer)
-			{
-				TransitionNodes(connection);
-			}
-		}
-		
 		protected override void EvaluateNode(AbstractLogicNode node, float deltaTime)
 		{
 			if(node.State == LogicNodeState.None)
@@ -148,19 +94,79 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
             		updateNode.Update(deltaTime);
             }
 
-            if (node.State != LogicNodeState.Ended)
-            	return;
-			
-			// TODO: When the node is evaluated, make sure we try to execute any pending transitions from THIS node at this time, not after all nodes are complete - this way we can nicely execute the next transitioned in node on the same frame, giving us an option to process multiple nodes in the flow instantly
+			// perform transition if the current node exit was invoked or was ended
+			if (node.State == LogicNodeState.Ended || m_InvokedNodes.Contains(node))
+			{
+				EvaluateNodeTransition(node);
+			}
+		}
 
+		private void EvaluateNodeTransition(AbstractLogicNode node)
+		{
+			// node outputs were not invoked and it is not ended
+			if (!m_InvokedNodes.Contains(node) && node.State != LogicNodeState.Ended)
+				return;
+
+			if (m_InvokedNodes.Remove(node))
+			{
+				if (m_InvokedConnections.TryGetValue(node, out var connection))
+				{
+					m_InvokedConnections.Remove(node);
+					EvaluateTransition(connection);
+					return;
+				}
+				
+				if(m_InvokedPorts.TryGetValue(node, out var port))
+				{
+					m_InvokedPorts.Remove(node);
+					TransitionOut(port);
+					return;
+				}
+			}
+
+			if (node.State == LogicNodeState.Ended)
+			{
+				TransitionOut(node);
+			}
+		}
+
+		protected virtual bool TransitionOut(AbstractLogicPort port)
+		{
+			if (!port.HasDefaultConnections)
+				return false;
+
+			var connections = port.Connections;
+			foreach (var connection in connections)
+			{
+				if (connection is IInvokedConnection)
+					continue;
+				
+				EvaluateTransition(connection);
+				return true;
+			}
+			
+			return false;
+		}
+
+		protected virtual bool TransitionOut(AbstractLogicNode node)
+		{
+			if (!node.HasPorts(LogicPortDirection.Output))
+				return false;
 			var outputPorts = node.GetOutputPorts();
 			foreach (var outputPort in outputPorts)
 			{
-				if (outputPort.HasDefaultConnections)
-				{
-					m_InvokedPorts.Add(outputPort);
-				}
+				if (!outputPort.HasDefaultConnections)
+					continue;
+
+				return TransitionOut(outputPort);
 			}
+
+			return false;
+		}
+
+		protected virtual void EvaluateTransition(AbstractLogicConnection connection)
+		{
+			TransitionNodes(connection);
 		}
 
 	}

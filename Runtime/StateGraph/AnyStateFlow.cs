@@ -11,10 +11,8 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			SetActiveNode(anyState);
 		}
 
-		protected override void EvaluateConnections(List<AbstractLogicConnection> buffer)
+		protected override void EvaluateTransition(AbstractLogicConnection connection)
 		{
-			AbstractLogicConnection connection = buffer[0];
-
 			var stateGraphFlow = FlowWrapper.Flows.FirstOrDefault(flow => flow is StateGraphFlow);
 			if (stateGraphFlow != null)
 			{

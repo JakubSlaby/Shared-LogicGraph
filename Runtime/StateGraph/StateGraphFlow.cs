@@ -8,7 +8,5 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 		{
 			SetActiveNode(node);
 		}
-
-		
 	}
 }

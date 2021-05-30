@@ -64,7 +64,7 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 
 			m_LogicGraphView = new LogicGraphView();
 			m_LogicGraphView.style.flexGrow = new StyleFloat(1);
-			var logicGraphContainer = ui.Q<VisualElement>("ContentContainer");
+			var logicGraphContainer = ui.Q<VisualElement>("right-column");
 			logicGraphContainer.Add(m_LogicGraphView);
 		}
 

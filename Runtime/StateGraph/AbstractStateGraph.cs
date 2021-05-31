@@ -17,12 +17,12 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 		{
 			var flow = new StateGraphFlow(m_fsmStructure.StartNode);
 			flow.onFlowComplete += OnFlowComplete;
-			flowWrapper.AddFlow(flow);
+			FlowWrapper.AddFlow(flow);
 
 			if (m_fsmStructure.AnyNode != null && m_fsmStructure.AnyNode.OutputPort.HasConnections)
 			{
 				var anyFlow = new AnyStateFlow(m_fsmStructure.AnyNode);
-				flowWrapper.AddFlow(anyFlow);
+				FlowWrapper.AddFlow(anyFlow);
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 
 		protected override void DoUpdate()
 		{
-			flowWrapper.Update(Time.deltaTime);
+			FlowWrapper.Update(Time.deltaTime);
 		}
 
 		protected override void DoStop()

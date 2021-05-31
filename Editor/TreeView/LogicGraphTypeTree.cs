@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEditor.IMGUI.Controls;
+﻿using UnityEditor.IMGUI.Controls;
 
 namespace WhiteSparrow.Shared.LogicGraphEditor
 {
-	public class LogicGraphTypeTree : TreeView
+	public class LogicGraphTypeTree : AbstractLogicGraphTreeView
 	{
-		public event Action OnSelectionChanged;
 		
 		public LogicGraphTypeTree(TreeViewState state) : base(state)
 		{
@@ -24,17 +21,6 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			}
 			
 			return root;
-		}
-
-		protected override void SelectionChanged(IList<int> selectedIds)
-		{
-			base.SelectionChanged(selectedIds);
-			OnSelectionChanged?.Invoke();
-		}
-
-		protected override bool CanMultiSelect(TreeViewItem item)
-		{
-			return false;
 		}
 	}
 }

@@ -7,6 +7,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	public static class LogicGraphRuntimeRegistry
 	{
 #if UNITY_EDITOR
+		internal static Action<WeakReference<AbstractLogicGraph>> onGraphRegistered;
+		
 		private static List<WeakReference<AbstractLogicGraph>> m_LogicGraphWeakReferenceList = new List<WeakReference<AbstractLogicGraph>>();
 #endif
 		
@@ -14,7 +16,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		public static void RegisterGraph(AbstractLogicGraph graph)
 		{
 #if UNITY_EDITOR
-			m_LogicGraphWeakReferenceList.Add(new WeakReference<AbstractLogicGraph>(graph));
+			var reference = new WeakReference<AbstractLogicGraph>(graph);
+			m_LogicGraphWeakReferenceList.Add(reference);
+			onGraphRegistered?.Invoke(reference);
 #endif
 		}
 

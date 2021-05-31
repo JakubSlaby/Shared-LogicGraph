@@ -21,7 +21,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		
 		private LogicFlowWrapper m_FlowWrapper;
-		protected LogicFlowWrapper flowWrapper => m_FlowWrapper;
+		protected LogicFlowWrapper FlowWrapper => m_FlowWrapper;
 
 		private LogicGraphState m_State = LogicGraphState.None;
 		public LogicGraphState state => m_State;

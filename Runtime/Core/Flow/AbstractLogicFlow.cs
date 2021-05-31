@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
-	public abstract class AbstractLogicFlow
+	public abstract partial class AbstractLogicFlow
 	{
 		private LogicFlowWrapper m_FlowWrapper;
 		public LogicFlowWrapper FlowWrapper => m_FlowWrapper;

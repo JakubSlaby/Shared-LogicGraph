@@ -211,5 +211,11 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 
 			ShowSpecificGraph(m_TypePreviewInstance);
 		}
+
+		private void Update()
+		{
+			if(m_LogicGraphView != null)
+				m_LogicGraphView.Update();
+		}
 	}
 }

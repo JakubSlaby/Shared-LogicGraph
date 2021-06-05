@@ -158,7 +158,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 					m_ActiveNodesCache = m_ActiveNodes.ToArray();
 				return m_ActiveNodesCache;
 			}
-			
 		}
+
 	}
 }

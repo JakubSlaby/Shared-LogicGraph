@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
+using Plugins.Repositories.GraphEditor.Runtime.Utils;
+using UnityEditor;
 using UnityEngine;
 using WhiteSparrow.Shared.GraphEditor.Data;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
-	public abstract partial class AbstractLogicNode : IGraphNodeData
+	public abstract partial class AbstractLogicNode : IGraphNodeData, IGraphDataSource
 	{
+		// IGraphNodeData
+		
 		private Rect m_Position;
 
 		Rect IGraphNodeData.position
@@ -17,5 +21,11 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		IReadOnlyCollection<IGraphPortData> IGraphNodeData.InputPorts => GetInputPorts();
 
 		IReadOnlyCollection<IGraphPortData> IGraphNodeData.OutputPorts => GetOutputPorts();
+		
+		// IGraphDataSource
+		string IGraphDataSource.GetScriptPath()
+		{
+			return GraphDataSource.GetSourcePath();
+		}
 	}
 }

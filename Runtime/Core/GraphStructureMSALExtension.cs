@@ -1,16 +1,21 @@
-﻿using Microsoft.Msagl.Core.Geometry;
+﻿#if UNITY_EDITOR
+using Microsoft.Msagl.Core.Geometry;
 using Microsoft.Msagl.Core.Geometry.Curves;
 using Microsoft.Msagl.Core.Layout;
+#endif
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
 	public partial interface IGraphStructure
 	{
+#if UNITY_EDITOR
 		GeometryGraph ToMSAL();
+#endif
 	}
 	
 	public abstract partial class AbstractGraphStructure
 	{
+#if UNITY_EDITOR
 		public GeometryGraph ToMSAL()
 		{
 			if (m_Nodes == null || m_Nodes.Count == 0)
@@ -33,6 +38,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 			return geometryGraph;
 		}
+		
+#endif
 		
 	}
 }

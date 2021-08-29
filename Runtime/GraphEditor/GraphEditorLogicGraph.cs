@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Msagl.Core.Layout;
+﻿using System.Collections.Generic;
 using WhiteSparrow.Shared.GraphEditor.Data;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
@@ -15,9 +13,11 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		public IReadOnlyCollection<IGraphFlowData> Flows => FlowWrapper.Flows;
 
 		// IAutoLayoutGraphData
-		GeometryGraph IAutoLayoutGraphData.ToMSAL()
+		#if UNITY_EDITOR
+		Microsoft.Msagl.Core.Layout.GeometryGraph IAutoLayoutGraphData.ToMSAL()
 		{
 			return structure.ToMSAL();
 		}
+		#endif
 	}
 }

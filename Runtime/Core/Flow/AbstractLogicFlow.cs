@@ -46,6 +46,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		protected void SetActiveNode(AbstractLogicNode node)
 		{
+			if (node == null)
+				return;
+			
 			if (m_ActiveNodes.Contains(node))
 			{
 				Debug.LogError($"Node {node} is already active");

@@ -15,6 +15,14 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 
 		protected override void DoStart()
 		{
+			var startNode = m_fsmStructure.StartNode;
+			if (startNode == null)
+			{
+				Debug.LogError($"StateGraph {this.GetType().Name} has no start node.");
+				CompleteGraph();
+				return;
+			}
+			
 			var flow = new StateGraphFlow(m_fsmStructure.StartNode);
 			flow.onFlowComplete += OnFlowComplete;
 			FlowWrapper.AddFlow(flow);

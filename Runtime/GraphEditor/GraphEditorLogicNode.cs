@@ -22,10 +22,12 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		IReadOnlyCollection<IGraphPortData> IGraphNodeData.OutputPorts => GetOutputPorts();
 		
+#if UNITY_EDITOR
 		// IGraphDataSource
 		string IGraphDataSource.GetScriptPath()
 		{
 			return GraphDataSource.GetSourcePath();
 		}
+#endif
 	}
 }

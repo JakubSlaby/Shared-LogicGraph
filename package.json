@@ -6,7 +6,7 @@
   "tags": [],
   "version": "0.1.0",
   "dependencies": {
-    "com.unity.2d.common": "https://github.com/JakubSlaby/GraphEditor.git"
+    "com.jakubslaby.grapheditor": "https://github.com/JakubSlaby/GraphEditor.git"
   },
   "repository": {
     "type": "git",

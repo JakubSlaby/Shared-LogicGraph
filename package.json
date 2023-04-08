@@ -1,11 +1,13 @@
 ﻿{
-  "name": "com.jakubslaby.logicgraph",
+  "name": "com.jakubslaby.grapheditor",
   "displayName": "Logic Graph",
   "description": "Logic Graph framework. Simple code based FSM with visualised flow window.",
   "author": "Jakub Slaby <jakubslaby@gmail.com>",
   "tags": [],
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "com.unity.2d.common": "https://github.com/JakubSlaby/GraphEditor.git"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/JakubSlaby/LogicGraph.git"

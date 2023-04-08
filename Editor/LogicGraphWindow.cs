@@ -214,6 +214,9 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 
 		private void Update()
 		{
+			if(!Application.isPlaying)
+				return;
+			
 			if(m_LogicGraphView != null)
 				m_LogicGraphView.Update();
 		}

@@ -1,6 +1,7 @@
 ﻿{
-  "name": "whitesparrow.logicgraph",
-  "description": "Logic graph framework. Simple code based FSM with visualised flow window.",
+  "name": "com.jakubslaby.logicgraph",
+  "displayName": "Logic Graph",
+  "description": "Logic Graph framework. Simple code based FSM with visualised flow window.",
   "author": "Jakub Slaby <jakubslaby@gmail.com>",
   "tags": [],
   "version": "0.1.0",

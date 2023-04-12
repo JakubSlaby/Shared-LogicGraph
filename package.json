@@ -5,9 +5,7 @@
   "author": "Jakub Slaby <jakubslaby@gmail.com>",
   "tags": [],
   "version": "0.1.0",
-  "dependencies": {
-    "com.jakubslaby.grapheditor": "https://github.com/JakubSlaby/GraphEditor.git#v0.1.0"
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git://github.com/JakubSlaby/LogicGraph.git"

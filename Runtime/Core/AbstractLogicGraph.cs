@@ -111,10 +111,15 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		public void Update()
 		{
+			this.Update(Time.deltaTime);
+		}
+
+		public void Update(float deltaTime)
+		{
 			if (m_State != LogicGraphState.Running)
 				return;
 			
-			m_FlowWrapper.Update(Time.deltaTime);
+			m_FlowWrapper.Update(deltaTime);
 			DoUpdate();
 		}
 

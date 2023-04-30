@@ -4,6 +4,7 @@ using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using WhiteSparrow.CommonEditor.EditorPaths;
 using WhiteSparrow.Shared.LogicGraph.Core;
 
 namespace WhiteSparrow.Shared.LogicGraphEditor
@@ -52,14 +53,18 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 
 		private void OnDisable()
 		{
-			m_ScriptGraphTree.OnSelectionChanged -= OnSelectionChanged;
-			m_RuntimeGraphTree.OnSelectionChanged -= OnSelectionChanged;
+			if(m_ScriptGraphTree != null)
+				m_ScriptGraphTree.OnSelectionChanged -= OnSelectionChanged;
+			
+			if(m_RuntimeGraphTree != null)
+				m_RuntimeGraphTree.OnSelectionChanged -= OnSelectionChanged;
 		}
 
 
 		private void Construct()
 		{
-			VisualTreeAsset template = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Plugins/Repositories/LogicGraph/Editor/Styling/LogicGraphWindow.uxml");
+			var p1 = EditorPathUtil.FindAssetPathToCallingScript("./Styling/LogicGraphWindow.uxml");
+			VisualTreeAsset template = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(p1);
 			VisualElement ui = template.CloneTree();
 			ui.style.flexGrow = new StyleFloat(1);
 			this.rootVisualElement.Add(ui);

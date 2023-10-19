@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if LOGIC_GRAPH_EDITOR
+using System.Collections.Generic;
 using Plugins.Repositories.GraphEditor.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -31,3 +32,4 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 #endif
 	}
 }
+#endif

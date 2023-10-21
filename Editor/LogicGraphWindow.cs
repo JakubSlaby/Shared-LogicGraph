@@ -1,10 +1,10 @@
 ﻿using System;
-using Plugins.Repositories.GraphEditor.Editor;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using WhiteSparrow.Shared.GraphEditor;
 using WhiteSparrow.Shared.LogicGraph.Core;
 
 namespace WhiteSparrow.Shared.LogicGraphEditor

@@ -1,4 +1,5 @@
-﻿using WhiteSparrow.Shared.GraphEditor.Data;
+﻿#if LOGIC_GRAPH_EDITOR
+using WhiteSparrow.Shared.GraphEditor.Data;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
@@ -9,3 +10,4 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		IGraphPortData IGraphEdgeData.output => From;
 	}
 }
+#endif

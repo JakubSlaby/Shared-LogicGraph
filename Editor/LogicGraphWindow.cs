@@ -1,10 +1,10 @@
 ﻿using System;
+using Plugins.Repositories.GraphEditor.Editor;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using WhiteSparrow.CommonEditor.EditorPaths;
 using WhiteSparrow.Shared.LogicGraph.Core;
 
 namespace WhiteSparrow.Shared.LogicGraphEditor
@@ -63,7 +63,7 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 
 		private void Construct()
 		{
-			var p1 = EditorPathUtil.FindAssetPathToCallingScript("./Styling/LogicGraphWindow.uxml");
+			var p1 = GraphEditorUtil.FindAssetPathToCallingScript("./Styling/LogicGraphWindow.uxml");
 			VisualTreeAsset template = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(p1);
 			VisualElement ui = template.CloneTree();
 			ui.style.flexGrow = new StyleFloat(1);

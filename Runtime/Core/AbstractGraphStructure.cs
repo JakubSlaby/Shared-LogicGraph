@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WhiteSparrow.Shared.LogicGraph.StateGraph;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
@@ -53,7 +54,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			if (m_Nodes.Contains(node))
 				return null;
 
-			if (!node.HasPorts(LogicPortDirection.Input))
+			if (!node.HasPorts(LogicPortDirection.Input) && node is not AnyState)
 			{
 				node.AddPort(new DefaultLogicPort("input", "Input", LogicPortDirection.Input, LogicPortType.Multiple));
 			}

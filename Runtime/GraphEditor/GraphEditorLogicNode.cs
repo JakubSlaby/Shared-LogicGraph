@@ -1,7 +1,7 @@
 ﻿#if LOGIC_GRAPH_EDITOR
+using System;
 using System.Collections.Generic;
 using Plugins.Repositories.GraphEditor.Runtime.Utils;
-using UnityEditor;
 using UnityEngine;
 using WhiteSparrow.Shared.GraphEditor.Data;
 
@@ -23,13 +23,16 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		IReadOnlyCollection<IGraphPortData> IGraphNodeData.OutputPorts => GetOutputPorts();
 		
-#if UNITY_EDITOR
 		// IGraphDataSource
 		string IGraphDataSource.GetScriptPath()
 		{
 			return GraphDataSource.GetSourcePath();
 		}
-#endif
+		
+		
+		float IGraphNodeData.TimeActivated => m_TimeActivated;
+		float IGraphNodeData.TimeEnded => m_TimeEnded;
 	}
+
 }
 #endif

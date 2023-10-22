@@ -151,14 +151,27 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		protected virtual bool TransitionOut(AbstractLogicNode node)
 		{
 			if (!node.HasPorts(LogicPortDirection.Output))
-				return false;
+			{
+				RemoveActiveNode(node);
+				return true;
+			}
+
+			bool anyConnections = false;
 			var outputPorts = node.GetOutputPorts();
 			foreach (var outputPort in outputPorts)
 			{
+				anyConnections |= outputPort.HasConnections;
+
 				if (!outputPort.HasDefaultConnections)
 					continue;
 
 				return TransitionOut(outputPort);
+			}
+
+			if (!anyConnections)
+			{
+				RemoveActiveNode(node);
+				return true;
 			}
 
 			return false;

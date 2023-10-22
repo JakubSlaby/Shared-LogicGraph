@@ -27,7 +27,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 			flow.onFlowComplete += OnFlowComplete;
 			FlowWrapper.AddFlow(flow);
 
-			if (m_fsmStructure.AnyNode != null && m_fsmStructure.AnyNode.OutputPort.HasConnections)
+			if (m_fsmStructure.HasAnyStateFlow && m_fsmStructure.AnyNode.OutputPort.HasConnections)
 			{
 				var anyFlow = new AnyStateFlow(m_fsmStructure.AnyNode);
 				FlowWrapper.AddFlow(anyFlow);

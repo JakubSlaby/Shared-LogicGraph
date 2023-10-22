@@ -47,6 +47,9 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			m_ScriptGraphTree.OnSelectionChanged -= OnSelectionChanged;
 			m_ScriptGraphTree.OnSelectionChanged += OnSelectionChanged;
 
+			
+			LogicGraphRuntimeRegistry.onGraphRegistered -= OnRuntimeGraphRegistered;
+			LogicGraphRuntimeRegistry.onGraphRegistered += OnRuntimeGraphRegistered;
 			m_RuntimeGraphTree.OnSelectionChanged -= OnSelectionChanged;
 			m_RuntimeGraphTree.OnSelectionChanged += OnSelectionChanged;
 		}
@@ -56,8 +59,17 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			if(m_ScriptGraphTree != null)
 				m_ScriptGraphTree.OnSelectionChanged -= OnSelectionChanged;
 			
+			LogicGraphRuntimeRegistry.onGraphRegistered -= OnRuntimeGraphRegistered;
 			if(m_RuntimeGraphTree != null)
 				m_RuntimeGraphTree.OnSelectionChanged -= OnSelectionChanged;
+			
+
+		}
+
+		private void OnRuntimeGraphRegistered(WeakReference<AbstractLogicGraph> obj)
+		{
+			if(m_RuntimeGraphTree != null)
+				m_RuntimeGraphTree.Reload();
 		}
 
 
@@ -108,9 +120,11 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			switch (m_SelectedTreeView)
 			{
 				case LogicGraphTreeView.Script:
+					m_ScriptGraphTree.SetSelection(new int[]{}, TreeViewSelectionOptions.None);
 					m_ScriptGraphTree.Reload();
 					break;
 				case LogicGraphTreeView.Runtime:
+					m_RuntimeGraphTree.SetSelection(new int[]{}, TreeViewSelectionOptions.None);
 					m_RuntimeGraphTree.Reload();
 					break;
 			}

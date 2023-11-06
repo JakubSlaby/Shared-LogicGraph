@@ -6,11 +6,21 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 	public abstract class AbstractStateGraph : AbstractLogicGraph
 	{
 		private StateGraphStructure m_fsmStructure;
+		public new StateGraphStructure structure => m_fsmStructure;
 		protected AnyState AnyState => m_fsmStructure.AnyNode;
 		
-		protected override IGraphStructure GetStructureInstance()
+		protected sealed override IGraphStructure GetStructureInstance()
 		{
-			return m_fsmStructure = new StateGraphStructure();
+			return m_fsmStructure = CreateStateGraphStructure();
+		}
+
+		protected virtual StateGraphStructure CreateStateGraphStructure()
+		{
+			return new StateGraphStructure();
+		}
+
+		protected override void DoConstructGraph()
+		{
 		}
 
 		protected override void DoStart()

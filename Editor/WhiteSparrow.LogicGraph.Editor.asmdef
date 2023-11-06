@@ -4,8 +4,7 @@
     "references": [
         "WhiteSparrow.LogicGraph",
         "WhiteSparrow.Shared.GraphEditor",
-        "WhiteSparrow.Shared.GraphEditor.Runtime",
-        "WhiteSparrow.Common.CommonEditor"
+        "WhiteSparrow.Shared.GraphEditor.Runtime"
     ],
     "includePlatforms": [
         "Editor"

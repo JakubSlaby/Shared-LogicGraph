@@ -19,6 +19,8 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			set => m_Position = value;
 		}
 
+		public virtual string NodeDisplayName => this.GetType().Name;
+
 		IReadOnlyCollection<IGraphPortData> IGraphNodeData.InputPorts => GetInputPorts();
 
 		IReadOnlyCollection<IGraphPortData> IGraphNodeData.OutputPorts => GetOutputPorts();
@@ -33,6 +35,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		float IGraphNodeData.TimeActivated => m_TimeActivated;
 		float IGraphNodeData.TimeEnded => m_TimeEnded;
 	}
+
 
 }
 #endif

@@ -1,41 +1,16 @@
-﻿using WhiteSparrow.Shared.LogicGraph.Core;
+﻿using System;
+using WhiteSparrow.Shared.LogicGraph.Core;
 
 namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 {
-	public class NestedGraphState<T> : AbstractState, IUpdateNode, IActivationNode
+	public class NestedGraphState<T> : AbstractNestedGraphState
 		where T : AbstractLogicGraph, new()
 	{
-		private T m_NestedGraph;
-	
-		public void Activate()
+		protected override AbstractLogicGraph CreateGraphInstance()
 		{
-			m_NestedGraph = new T();
-			m_NestedGraph.Initialize();
-			m_NestedGraph.onGraphComplete += OnCompletedGraph;
-			m_NestedGraph.Start();
+			return new T();
 		}
 
-		public void Deactivate()
-		{
-			m_NestedGraph.onGraphComplete -= OnCompletedGraph;
-			m_NestedGraph = null;
-		}
-
-		
-		public override void Execute()
-		{
-		}
-
-		public void Update(float deltaTime)
-		{
-			m_NestedGraph.Update(deltaTime);
-		}
-		
-		private void OnCompletedGraph(AbstractLogicGraph graph)
-		{
-			m_NestedGraph.onGraphComplete -= OnCompletedGraph;
-			End();
-		}
-
+		public override Type NestedGraphType => typeof(T);
 	}
 }

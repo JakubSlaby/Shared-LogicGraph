@@ -2,6 +2,7 @@
 using Microsoft.Msagl.Core.Geometry;
 using Microsoft.Msagl.Core.Geometry.Curves;
 using Microsoft.Msagl.Core.Layout;
+using UnityEngine;
 #endif
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
@@ -25,7 +26,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 			foreach (var logicNode in m_Nodes)
 			{
-				var geometricNode = new Node(CurveFactory.CreateRectangle(150,60, new Point(0, 0)), logicNode);
+				string name = logicNode.GetType().Name;
+				
+				var geometricNode = new Node(CurveFactory.CreateRectangle(Mathf.Max(150, name.Length * 8 + 30),60, new Point(0, 0)), logicNode);
 				geometryGraph.Nodes.Add(geometricNode);
 			}
 

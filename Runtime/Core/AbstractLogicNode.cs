@@ -20,7 +20,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	{
 		private Guid m_Guid;
 		public Guid guid => m_Guid;
-		
+
 		private List<AbstractLogicPort> m_InputPorts;
 		private AbstractLogicPort[] m_InputPortsCache;
 		private List<AbstractLogicPort> m_OutputPorts;
@@ -30,7 +30,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		public LogicNodeState State => m_State;
 		
 		internal IGraphStructure Structure { get; set; }
-
+	
 
 		private float m_TimeActivated;
 		private float m_TimeEnded;

@@ -40,18 +40,21 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		#region Structure
 		
-		
-		
 		private void ConstructGraph()
 		{
 			m_FlowWrapper = new LogicFlowWrapper();
 			if(m_GraphStructure == null)
 				m_GraphStructure = GetStructureInstance();
-			
+
+			OnStructureCreated(m_GraphStructure);
 			DoConstructGraph();
 		}
 
 		protected abstract IGraphStructure GetStructureInstance();
+		protected internal virtual void OnStructureCreated(IGraphStructure graphStructure)
+		{
+		}
+		
 		protected abstract void DoConstructGraph();
 
 		#endregion

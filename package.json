@@ -4,8 +4,10 @@
   "description": "Logic Graph framework. Simple code based FSM with visualised flow window.",
   "author": "Jakub Slaby <jakubslaby@gmail.com>",
   "tags": [],
-  "version": "0.1.1",
-  "dependencies": {},
+  "version": "0.1.2",
+  "dependencies": {
+    "com.jakubslaby.grapheditor" : "0.1.5"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/JakubSlaby/LogicGraph.git"

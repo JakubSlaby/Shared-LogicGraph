@@ -1,4 +1,4 @@
-#if LOGIC_GRAPH_EDITOR
+#if LOGIC_GRAPH_EDITOR && UNITY_EDITOR
 using System;
 using WhiteSparrow.Shared.GraphEditor.Data;
 

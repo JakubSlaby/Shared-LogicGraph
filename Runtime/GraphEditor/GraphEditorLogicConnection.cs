@@ -1,4 +1,4 @@
-﻿#if LOGIC_GRAPH_EDITOR
+﻿#if LOGIC_GRAPH_EDITOR && UNITY_EDITOR
 using WhiteSparrow.Shared.GraphEditor.Data;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core

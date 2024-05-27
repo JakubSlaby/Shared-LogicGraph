@@ -8,6 +8,7 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 	public abstract class AbstractLogicGraphTreeView : TreeView
 	{
 		public event Action<AbstractLogicGraphTreeView> OnSelectionChanged;
+		public abstract LogicGraphEditorWindowState.LogicGraphTreeView GraphType { get; }
 		
 		protected AbstractLogicGraphTreeView(TreeViewState state) : base(state)
 		{

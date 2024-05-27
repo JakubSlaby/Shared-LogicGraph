@@ -34,6 +34,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 		private float m_TimeActivated;
 		private float m_TimeEnded;
+
+		public string NodeDisplayName => GetType().Name;
+
 		
 		public AbstractLogicNode()
 		{

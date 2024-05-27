@@ -1,0 +1,36 @@
+﻿.logicGraph-sidebar
+{
+	height: 100%;
+}
+.logicGraph-sidebar .unity-toolbar .tab
+{
+	margin-top: 1px;
+	border-top-width: 1px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	padding-right: 20px;
+	background-color: var(--unity-colors-tab-background);
+	border-color: var(--unity-colors-tab-background);
+	margin-right: 1px;
+}
+
+
+
+.logicGraph-sidebar .unity-toolbar .tab.active
+{
+	background-color: var(--unity-colors-app_toolbar_button-background);
+	margin-bottom: -1px;
+	border-color: var(--unity-colors-toolbar-border);
+	
+	border-top-color: var(--unity-colors-highlight-background);
+	border-top-width: 2px;
+	padding-top: -2px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
+
+
+.unity-imgui-container
+{
+	height: 100%;
+}

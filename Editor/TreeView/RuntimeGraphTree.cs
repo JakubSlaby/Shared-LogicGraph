@@ -29,7 +29,9 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 				root.AddChild(new TreeViewItem(0, 0, "No runtime graphs"));
 			return root;
 		}
-		
-		
+
+
+		public override LogicGraphEditorWindowState.LogicGraphTreeView GraphType =>
+			LogicGraphEditorWindowState.LogicGraphTreeView.Runtime;
 	}
 }

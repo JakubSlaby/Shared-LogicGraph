@@ -25,5 +25,8 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			
 			return root;
 		}
+
+		public override LogicGraphEditorWindowState.LogicGraphTreeView GraphType =>
+			LogicGraphEditorWindowState.LogicGraphTreeView.Script;
 	}
 }

@@ -40,9 +40,6 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 				m_Sidebar.OnSelectionChange -= OnSelectionChanged;
 		}
 
-
-
-
 		private void Construct()
 		{
 			if (m_State == null)
@@ -51,7 +48,7 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			var uss = AssetDatabase.LoadAssetAtPath<StyleSheet>(GraphEditorUtil.FindAssetPathToCallingScript("./Styling/GraphEditorStyleSheet.uss"));
 			this.rootVisualElement.styleSheets.Add(uss);
 			
-			var splitView = new TwoPaneSplitView();
+			var splitView = new TwoPaneSplitView(0, 200, TwoPaneSplitViewOrientation.Horizontal);
 			var left = new VisualElement();
 			var right = new VisualElement();
 			

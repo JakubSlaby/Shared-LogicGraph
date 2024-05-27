@@ -18,12 +18,12 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 #if UNITY_EDITOR
 		public GeometryGraph ToMSAL()
 		{
-			if (m_Nodes == null || m_Nodes.Count == 0)
+			if (AllNodes == null || AllNodes.Length == 0)
 				return null;
 			
 			GeometryGraph geometryGraph = new GeometryGraph();
 
-			foreach (var logicNode in m_Nodes)
+			foreach (var logicNode in AllNodes)
 			{
 				var geometricNode = new Node(CurveFactory.CreateRectangle(150,60, new Point(0, 0)), logicNode);
 				geometryGraph.Nodes.Add(geometricNode);

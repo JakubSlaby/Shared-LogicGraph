@@ -13,7 +13,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		{
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("digraph namedGraph {");
-			foreach (var node in m_Nodes)
+			foreach (var node in AllNodes)
 			{
 				sb.AppendLine(node.GetType().Name);
 			}

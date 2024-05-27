@@ -9,7 +9,7 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 		{
 			get
 			{
-				return m_StartNode ?? (m_Nodes.Count > 0 ? m_Nodes[0] : null);
+				return m_StartNode ?? (AllNodes.Length > 0 ? AllNodes[0] : null);
 			}
 			set
 			{

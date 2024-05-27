@@ -11,12 +11,18 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		// IGraphNodeData
 		
 		private Rect m_Position;
+		private float _timeActivated;
+		private float _timeEnded;
 
 		Rect IGraphNodeData.position
 		{
 			get => m_Position;
 			set => m_Position = value;
 		}
+
+		float IGraphNodeData.TimeActivated => _timeActivated;
+
+		float IGraphNodeData.TimeEnded => _timeEnded;
 
 		IReadOnlyCollection<IGraphPortData> IGraphNodeData.InputPorts => GetInputPorts();
 

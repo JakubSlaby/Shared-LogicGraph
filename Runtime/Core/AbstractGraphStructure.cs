@@ -21,14 +21,14 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	[Serializable]
 	public abstract partial class AbstractGraphStructure : IGraphStructure
 	{
-		protected List<AbstractLogicNode> m_Nodes = new List<AbstractLogicNode>();
-		protected AbstractLogicNode[] m_NodesCache;
+		private List<AbstractLogicNode> m_Nodes = new List<AbstractLogicNode>();
+		private AbstractLogicNode[] m_NodesCache;
 
-		protected List<AbstractTriggerNode> m_TriggerNodes = new List<AbstractTriggerNode>();
-		protected AbstractTriggerNode[] m_TriggerNodesCache;
+		private List<AbstractTriggerNode> m_TriggerNodes = new List<AbstractTriggerNode>();
+		private AbstractTriggerNode[] m_TriggerNodesCache;
 
-		protected List<AbstractLogicConnection> m_Connections = new List<AbstractLogicConnection>();
-		protected AbstractLogicConnection[] m_ConnectionsCache;
+		private List<AbstractLogicConnection> m_Connections = new List<AbstractLogicConnection>();
+		private AbstractLogicConnection[] m_ConnectionsCache;
 
 
 		AbstractLogicNode IGraphStructure.AddNode(AbstractLogicNode node)
@@ -149,12 +149,22 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				m_ConnectionsCache = null;
 			}
 		}
-		
-		AbstractLogicNode[] IGraphStructure.GetAllNodes()
+
+		AbstractLogicNode[] IGraphStructure.GetAllNodes() => AllNodes;
+
+		internal AbstractLogicNode[] AllNodes
 		{
-			if (m_NodesCache == null)
-				m_NodesCache = m_Nodes.ToArray();
-			return m_NodesCache;
+			get
+			{
+				if (m_NodesCache == null)
+				{
+					if (m_Nodes.Count == 0)
+						m_NodesCache = new AbstractLogicNode[] { new EmptyGraphNode() };
+					else
+						m_NodesCache = m_Nodes.ToArray();
+				}
+				return m_NodesCache;
+			}
 		}
 
 		AbstractTriggerNode[] IGraphStructure.GetAllTriggerNodes()

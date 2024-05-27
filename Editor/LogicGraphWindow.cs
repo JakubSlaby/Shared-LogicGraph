@@ -4,6 +4,7 @@ using UnityEditor.IMGUI.Controls;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using WhiteSparrow.Shared.GraphEditor;
 using WhiteSparrow.Shared.LogicGraph.Core;
 
 namespace WhiteSparrow.Shared.LogicGraphEditor
@@ -46,20 +47,36 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			m_ScriptGraphTree.OnSelectionChanged -= OnSelectionChanged;
 			m_ScriptGraphTree.OnSelectionChanged += OnSelectionChanged;
 
+			
+			LogicGraphRuntimeRegistry.onGraphRegistered -= OnRuntimeGraphRegistered;
+			LogicGraphRuntimeRegistry.onGraphRegistered += OnRuntimeGraphRegistered;
 			m_RuntimeGraphTree.OnSelectionChanged -= OnSelectionChanged;
 			m_RuntimeGraphTree.OnSelectionChanged += OnSelectionChanged;
 		}
 
 		private void OnDisable()
 		{
-			m_ScriptGraphTree.OnSelectionChanged -= OnSelectionChanged;
-			m_RuntimeGraphTree.OnSelectionChanged -= OnSelectionChanged;
+			if(m_ScriptGraphTree != null)
+				m_ScriptGraphTree.OnSelectionChanged -= OnSelectionChanged;
+			
+			LogicGraphRuntimeRegistry.onGraphRegistered -= OnRuntimeGraphRegistered;
+			if(m_RuntimeGraphTree != null)
+				m_RuntimeGraphTree.OnSelectionChanged -= OnSelectionChanged;
+			
+
+		}
+
+		private void OnRuntimeGraphRegistered(WeakReference<AbstractLogicGraph> obj)
+		{
+			if(m_RuntimeGraphTree != null)
+				m_RuntimeGraphTree.Reload();
 		}
 
 
 		private void Construct()
 		{
-			VisualTreeAsset template = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Plugins/Repositories/LogicGraph/Editor/Styling/LogicGraphWindow.uxml");
+			var p1 = GraphEditorUtil.FindAssetPathToCallingScript("./Styling/LogicGraphWindow.uxml");
+			VisualTreeAsset template = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(p1);
 			VisualElement ui = template.CloneTree();
 			ui.style.flexGrow = new StyleFloat(1);
 			this.rootVisualElement.Add(ui);
@@ -103,9 +120,11 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			switch (m_SelectedTreeView)
 			{
 				case LogicGraphTreeView.Script:
+					m_ScriptGraphTree.SetSelection(new int[]{}, TreeViewSelectionOptions.None);
 					m_ScriptGraphTree.Reload();
 					break;
 				case LogicGraphTreeView.Runtime:
+					m_RuntimeGraphTree.SetSelection(new int[]{}, TreeViewSelectionOptions.None);
 					m_RuntimeGraphTree.Reload();
 					break;
 			}
@@ -214,6 +233,9 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 
 		private void Update()
 		{
+			if(!Application.isPlaying)
+				return;
+			
 			if(m_LogicGraphView != null)
 				m_LogicGraphView.Update();
 		}

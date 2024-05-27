@@ -1,4 +1,4 @@
-﻿using WhiteSparrow.Shared.LogicGraph.Core;
+using WhiteSparrow.Shared.LogicGraph.Core;
 
 namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 {

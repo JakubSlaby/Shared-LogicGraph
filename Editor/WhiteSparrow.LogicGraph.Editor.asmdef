@@ -16,7 +16,9 @@
         "AutomaticGraphLayout.dll"
     ],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "LOGIC_GRAPH_EDITOR"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

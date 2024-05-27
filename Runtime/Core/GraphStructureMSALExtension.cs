@@ -1,21 +1,22 @@
-﻿#if UNITY_EDITOR
+﻿#if UNITY_EDITOR && LOGIC_GRAPH_EDITOR
 using Microsoft.Msagl.Core.Geometry;
 using Microsoft.Msagl.Core.Geometry.Curves;
 using Microsoft.Msagl.Core.Layout;
+using UnityEngine;
 #endif
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
 {
 	public partial interface IGraphStructure
 	{
-#if UNITY_EDITOR
+#if UNITY_EDITOR && LOGIC_GRAPH_EDITOR
 		GeometryGraph ToMSAL();
 #endif
 	}
 	
 	public abstract partial class AbstractGraphStructure
 	{
-#if UNITY_EDITOR
+#if UNITY_EDITOR && LOGIC_GRAPH_EDITOR
 		public GeometryGraph ToMSAL()
 		{
 			if (AllNodes == null || AllNodes.Length == 0)
@@ -25,7 +26,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 
 			foreach (var logicNode in AllNodes)
 			{
-				var geometricNode = new Node(CurveFactory.CreateRectangle(150,60, new Point(0, 0)), logicNode);
+				string name = logicNode.GetType().Name;
+				
+				var geometricNode = new Node(CurveFactory.CreateRectangle(Mathf.Max(150, name.Length * 8 + 30),60, new Point(0, 0)), logicNode);
 				geometryGraph.Nodes.Add(geometricNode);
 			}
 

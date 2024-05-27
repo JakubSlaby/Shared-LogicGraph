@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if LOGIC_GRAPH_EDITOR && UNITY_EDITOR
+using System.Collections.Generic;
 using WhiteSparrow.Shared.GraphEditor.Data;
 
 namespace WhiteSparrow.Shared.LogicGraph.Core
@@ -21,3 +22,4 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		#endif
 	}
 }
+#endif

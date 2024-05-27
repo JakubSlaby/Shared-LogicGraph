@@ -7,7 +7,9 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 	{
 		public RuntimeGraphTree(TreeViewState state) : base(state)
 		{
+			
 		}
+		
 
 		protected override TreeViewItem BuildRoot()
 		{

@@ -20,7 +20,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 	{
 		private Guid m_Guid;
 		public Guid guid => m_Guid;
-		
+
 		private List<AbstractLogicPort> m_InputPorts;
 		private AbstractLogicPort[] m_InputPortsCache;
 		private List<AbstractLogicPort> m_OutputPorts;
@@ -30,7 +30,11 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		public LogicNodeState State => m_State;
 		
 		internal IGraphStructure Structure { get; set; }
+	
 
+		private float m_TimeActivated;
+		private float m_TimeEnded;
+		
 		public AbstractLogicNode()
 		{
 			m_Guid = Guid.NewGuid();
@@ -44,6 +48,18 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		internal void ChangeState(LogicNodeState targetState)
 		{
 			m_State = targetState;
+			#if UNITY_EDITOR
+			switch (m_State)
+			{
+				case LogicNodeState.Active:
+					m_TimeActivated = Time.realtimeSinceStartup;
+					break;
+				
+				case LogicNodeState.Ended:
+					m_TimeEnded = Time.realtimeSinceStartup;
+					break;
+			}
+			#endif
 		}
 
 #region Connection Ports

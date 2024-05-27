@@ -19,6 +19,9 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 				var item = new TreeViewItem(i, 0, types[i].Name);
 				root.AddChild(item);
 			}
+
+			if (!root.hasChildren)
+				root.AddChild(new TreeViewItem(0, 0, "No script graphs"));
 			
 			return root;
 		}

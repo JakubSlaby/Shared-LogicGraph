@@ -1,4 +1,5 @@
-﻿using System;
+﻿ #if LOGIC_GRAPH_EDITOR && UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using WhiteSparrow.Shared.GraphEditor.Data;
 
@@ -10,3 +11,4 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		IReadOnlyCollection<IGraphEdgeData> IGraphFlowData.ActiveEdges => Array.Empty<IGraphEdgeData>();
 	}
 }
+#endif

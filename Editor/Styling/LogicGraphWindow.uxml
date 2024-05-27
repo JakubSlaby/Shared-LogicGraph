@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <Style src="LogicGraphWindow.uss" />
-    <Style src="/Assets/Plugins/Repositories/GraphEditor/Editor/GraphView/GraphView.uss" />
+<!--    <Style src="/Assets/Plugins/Repositories/GraphEditor/Editor/GraphView/GraphView.uss" />-->
     <WhiteSparrow.Shared.GraphEditor.Elements.SplitView>
         <uie:Toolbar>
             <uie:ToolbarMenu display-tooltip-when-elided="true" name="tree-view-selector" view-data-key="tree-view-selector" />

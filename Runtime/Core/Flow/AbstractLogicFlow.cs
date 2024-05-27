@@ -11,7 +11,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 		
 		private List<AbstractLogicNode> m_ActiveNodes;
 		private AbstractLogicNode[] m_ActiveNodesCache;
-
+		
 		public event Action<AbstractLogicFlow> onFlowComplete;
 		
 		public AbstractLogicFlow()
@@ -61,7 +61,7 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			m_ActiveNodes.Add(node);
 			m_EvaluationBuffer.Add(node);
 			m_ActiveNodesCache = null;
-			
+
 			OnActiveNodeSet(node);
 		}
 
@@ -102,6 +102,23 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 			}
 			
 			RemoveActiveNode(fromNode);
+
+			if (fromPort is ParallelOutputPort)
+			{
+				foreach (var parallelConnection in fromPort.Connections)
+				{
+					var parallelToNode = parallelConnection.To?.Node;
+					if(parallelToNode == null)
+						continue;
+
+					if (m_ActiveNodes.Contains(parallelToNode))
+						continue;
+					
+					SetActiveNode(parallelToNode);
+				}
+
+				return;
+			}
 			
 			var toPort = connection.To;
 			var toNode = toPort.Node;

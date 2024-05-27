@@ -30,6 +30,8 @@ namespace WhiteSparrow.Shared.LogicGraph.StateGraph
 				return m_AnyState;
 			}
 		}
+
+		internal bool HasAnyStateFlow => m_AnyState != null;
 		
 		protected override AbstractLogicConnection CreateDefaultConnectionInstance()
 		{

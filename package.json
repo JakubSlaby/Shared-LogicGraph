@@ -1,0 +1,32 @@
+﻿{
+  "name": "com.jakubslaby.logicgraph",
+  "displayName": "Logic Graph",
+  "description": "Logic Graph framework. Simple code based FSM with visualised flow window.",
+  "author": "Jakub Slaby <jakubslaby@gmail.com>",
+  "tags": [],
+  "version": "0.1.3",
+  "dependencies": {
+    "com.jakubslaby.grapheditor" : "0.1.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JakubSlaby/LogicGraph.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JakubSlaby/LogicGraph/issues"
+  },
+  "directories": {
+    "editor": "./Editor",
+    "runtime": "./Runtime"
+  },
+  "keywords": [
+    "graph",
+    "uielements",
+    "unity"
+  ],
+  "scripts": {
+    "prepublishOnly": "node package/prepublish.js",
+    "postpublish": "node package/postpublish.js"
+  },
+  "license": "MIT"
+}

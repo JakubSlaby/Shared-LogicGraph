@@ -6,7 +6,7 @@
   "tags": [],
   "version": "0.1.4",
   "dependencies": {
-    "com.jakubslaby.grapheditor" : "0.1.6"
+    "com.jakubslaby.grapheditor" : "0.1.7"
   },
   "repository": {
     "type": "git",

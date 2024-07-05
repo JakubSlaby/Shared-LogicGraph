@@ -54,6 +54,12 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				Debug.LogError($"Node {node} is already active");
 				return;
 			}
+
+			if (node.State == LogicNodeState.Active)
+			{
+				Debug.LogError($"Node {node.GetType().Name} is being set as Active but it's state is already Active. Internal issue, forcing state reset.");
+				node.ChangeState(LogicNodeState.Ended);
+			}
 			
 			if(node.State == LogicNodeState.Ended)
 				node.ChangeState(LogicNodeState.None);
@@ -79,6 +85,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				return;
 			}
 
+			if(node.State != LogicNodeState.Ended)
+				node.ChangeState(LogicNodeState.Ended);
+			
 			m_ActiveNodes.Remove(node);
 			m_ActiveNodesCache = null;
 			
@@ -100,6 +109,9 @@ namespace WhiteSparrow.Shared.LogicGraph.Core
 				Debug.LogError($"Trying to transition from a not active node {fromNode}, connection {connection}. Stopping");
 				return;
 			}
+			
+			if(fromNode.State != LogicNodeState.Ended)
+				fromNode.ChangeState(LogicNodeState.Ended);
 			
 			RemoveActiveNode(fromNode);
 

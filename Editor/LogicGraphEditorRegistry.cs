@@ -21,8 +21,13 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 				
 				output.Add(type);
 			}
+			output.Sort(TypeNameSort);
 
 			s_AllApplicableTypes = output.ToArray();
+		}	
+		private static int TypeNameSort(Type x, Type y)
+		{
+			return EditorUtility.NaturalCompare(x.Name, y.Name);
 		}
 		
 		internal static Type[] GetAllGraphTypes()

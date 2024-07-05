@@ -91,19 +91,23 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 		
 		private void OnSelectionChanged(AbstractLogicGraphTreeView abstractLogicGraphTreeView)
 		{
+			
+			
 			if (abstractLogicGraphTreeView.GraphType == LogicGraphEditorWindowState.LogicGraphTreeView.Script)
 			{
 				var selection = abstractLogicGraphTreeView.GetSelection();
 				if (selection.Count == 0)
 					return;
 				int selectedId = selection[0];
-				var allGraphTypes = LogicGraphEditorRegistry.GetAllGraphTypes();
 
-				if (selectedId >= allGraphTypes.Length || selectedId < 0)
-					return;
-
-				Type type = allGraphTypes[selectedId];
-				m_LogicGraphView.ShowGraph(type);
+				var item = abstractLogicGraphTreeView.FindItem(selectedId);
+				if (item is LogicGraphTreeViewItem logicGraphItem)
+				{
+					
+					m_LogicGraphView.ShowGraph(logicGraphItem.GraphType);
+					
+				}
+				
 			}
 			
 			if (abstractLogicGraphTreeView.GraphType == LogicGraphEditorWindowState.LogicGraphTreeView.Runtime)

@@ -9,6 +9,8 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 	{
 		public event Action<AbstractLogicGraphTreeView> OnSelectionChanged;
 		public abstract LogicGraphEditorWindowState.LogicGraphTreeView GraphType { get; }
+		public abstract TreeViewItem RootItem { get; }
+
 		
 		protected AbstractLogicGraphTreeView(TreeViewState state) : base(state)
 		{
@@ -25,6 +27,10 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 			return false;
 		}
 
+		public TreeViewItem FindItem(int id)
+		{
+			return this.FindItem(id, RootItem);
+		}
 		
 		
 	}

@@ -5,6 +5,9 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 {
 	public class RuntimeGraphTree : AbstractLogicGraphTreeView
 	{
+		
+		private TreeViewItem m_Root;
+		public override TreeViewItem RootItem => m_Root;
 		public RuntimeGraphTree(TreeViewState state) : base(state)
 		{
 			
@@ -13,7 +16,7 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 
 		protected override TreeViewItem BuildRoot()
 		{
-			var root = new TreeViewItem(-1, -1);
+			m_Root = new TreeViewItem(-1, -1);
 
 			var allLogicGraphs = LogicGraphRuntimeRegistry.GetLogicGraphs();
 
@@ -22,12 +25,12 @@ namespace WhiteSparrow.Shared.LogicGraphEditor
 				var logicGraphReference = allLogicGraphs[i];
 				if (!logicGraphReference.TryGetTarget(out var logicGraph))
 					continue;
-				root.AddChild(new TreeViewItem(i,0, logicGraph.GetType().Name));
+				m_Root.AddChild(new TreeViewItem(i,0, logicGraph.GetType().Name));
 			}
 			
-			if(!root.hasChildren)
-				root.AddChild(new TreeViewItem(0, 0, "No runtime graphs"));
-			return root;
+			if(!m_Root.hasChildren)
+				m_Root.AddChild(new TreeViewItem(0, 0, "No runtime graphs"));
+			return m_Root;
 		}
 
 
